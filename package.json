@@ -68,6 +68,7 @@
     "minimatch": "^3.0.4",
     "minimist": "^0.0.8",
     "mkdirp": "^0.5.1",
+    "mongoose": "^5.1.6",
     "ms": "^2.0.0",
     "once": "^1.4.0",
     "path-is-absolute": "^1.0.1",

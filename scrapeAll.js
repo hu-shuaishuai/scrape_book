@@ -2,6 +2,8 @@
  * 查询http://books.toscrape.com/网站当前页的价格和标题
  */
 const puppeteer = require("puppeteer");
+const Book = require("./models/book");
+var db = require("./db");
 
 let scrape = async () => {
   const browser = await puppeteer.launch({ headless: false });
@@ -16,7 +18,7 @@ let scrape = async () => {
     //遍历每个产品
     for (var element of elements) {
       let title = element.childNodes[5].innerText; //查询标题
-      let price = element.childNodes[7].childNodes[0].innerText; //查询价格
+      let price = element.childNodes[7].children[0].innerText; //查询价格
 
       data.push({ title, price });
     }
@@ -29,5 +31,9 @@ let scrape = async () => {
 };
 
 scrape().then(value => {
-  console.log("-------value", value);
+  //将抓去到的数据保存到数据库
+  Book.collection.insertMany(value, (err, data) => {
+    if (err) return console.log(err);
+    console.log(data);
+  });
 });
